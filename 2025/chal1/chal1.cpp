@@ -8,7 +8,7 @@ using namespace std;
 int normalise_toint(string _input,bool _negation) {
   /*
   This will normalise the input. Because the dial has values from 0-99, anything over 100 includes a redundant rotation, where the number of extra rotations is the number hundredth column. So as the value is turned into an integer, the hundredth column is not included.
-  "toint" in this case means turning "L2" to "-2" and "R4" to "4".
+  "toint" means turning "L2" to "-2" and "R4" to "4", as well as changing the data type to an int
   Examples:
   _input = L478
   returns: -78
