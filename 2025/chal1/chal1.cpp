@@ -5,8 +5,21 @@
 #include <string>
 using namespace std;
 
-int toint(string _input,bool _negation) {
-  string combcomb;
+int normalise_toint(string _input,bool _negation) {
+  /*
+  This will normalise the input. Because the dial has values from 0-99, anything over 100 includes a redudndant rotation, where the number of extra rotations is the number hundrednth collumn. So as the value is turned into an integer, the hundredth collumn is not included.
+  "toint" in this case means turning "L2" to "-2" and "R4" to "4".
+  Examples:
+  _input = L478
+  returns: -78
+
+  _input = R958
+  returns: 958
+
+  _input = R47
+  returns: 47
+  */
+
   string comb;
   if (_negation) {
     comb = "-";
@@ -23,7 +36,6 @@ int toint(string _input,bool _negation) {
     }
   }
   return stoi(comb);
-  return 0;
 }
 
 int main() {
@@ -33,10 +45,12 @@ int main() {
   int zero_count = {0};
   ifstream read("input");
   while (getline (read, txt)) {
+    // if the line begins with a L, then its negative
     if (txt[0] == 'L') {
-      input.push_back(toint(txt, true));
-    } else if (txt[0] == 'R') {
-      input.push_back(toint(txt, false));
+      input.push_back(normalise_toint(txt, true));
+    } // if the line begins with a R, then its positive
+    else if (txt[0] == 'R') {
+      input.push_back(normalise_toint(txt, false));
     } else {
       cout << "Undefined behaviour: somehow not L or R" << endl;
       break;
